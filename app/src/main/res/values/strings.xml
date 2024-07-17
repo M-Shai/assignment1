@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">myAssignment1</string>
+    <string name="title">Todo</string>
+    <string name="msg1">%1$s List item</string>
+    <string name="msg2">New Todo</string>
+    <string name="empty">No items todo yet!</string>
+    <string name="error">Error, must enter text!</string>
+</resources>
