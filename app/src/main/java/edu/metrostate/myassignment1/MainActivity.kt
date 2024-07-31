@@ -17,140 +17,37 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.runtime.remember
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var navController: NavHostController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // val todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = "Login") {
-                composable("Login") {
-                    Login() {
-                        navController.navigate("Register")
-                        // TodoView(viewModel = todoViewModel)
-                    }
-                }
-                composable("Register") {
-                    Register() {
-                        // TodoView(viewModel = todoViewModel)
-                        navController.navigate("Todo")
-                    }
-                }
-                /*
-                composable("Todo") {
-                    Todo(){
-                        TodoView(viewModel = todoViewModel)
-                    }
-                }
-                */
-
-            }
-        }
-
-    }
-}
-
-@Composable
-fun Login(
-    onLoginButtonClicked: () -> Unit
-){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Cyan),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = "Login",
-            fontSize = 48.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        Button(onClick = onLoginButtonClicked) {
-            Text(
-                text = "Login",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-        /*
-        Button(onClick = onRegButtonClicked) {
-            Text(
-                text = "Register new user",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-        */
-
-    }
-
-}
-
-@Composable
-fun Register(
-    onButtonClicked: () -> Unit
-){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Cyan),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = "Register",
-            fontSize = 48.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        Button(onClick = onButtonClicked) {
-            Text(
-                text = "Register new user",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-        Button(onClick = onButtonClicked) {
-            Text(
-                text = "Login",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
+            NavGraph(navController = rememberNavController())
         }
     }
 }
 
 @Composable
-fun Todo(
-    // onTodoButtonClicked: @Composable () -> Unit
-) {
-    var showTodo: Boolean = false
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Cyan),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = "Todo",
-            fontSize = 48.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        Button(onClick = {
-            TodoView(viewModel = todoViewModel)
-        }) {
-            Text(
-                text = "Start Todo",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
+inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavController): T {
+    val navGraphRoute = destination.parent?.route?: return viewModel()
+    val parentEntry = remember(this){
+        navController.getBackStackEntry(navGraphRoute)
     }
+    return viewModel(parentEntry)
 }
+

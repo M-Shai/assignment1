@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -43,12 +44,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodoView (viewModel: TodoViewModel){
+fun TodoView (viewModel: TodoViewModel, navController: NavController){
     //val todoList = getInitialList()
     val todoList by viewModel.todoList.observeAsState()
     var inputText by remember{ mutableStateOf("") }
@@ -57,10 +61,9 @@ fun TodoView (viewModel: TodoViewModel){
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false,
     )
-
     Column(
         modifier = Modifier
-            .absoluteOffset(350.dp, 850.dp)
+            .absoluteOffset(325.dp, 750.dp)
             .size(100.dp)
             .fillMaxSize()
             .padding(16.dp)
@@ -74,11 +77,28 @@ fun TodoView (viewModel: TodoViewModel){
             Icon(Icons.Filled.Add, "Small floating action button.")
         }
     }
-
     Column(
         modifier = Modifier
+            .absoluteOffset(30.dp, 750.dp)
+            .size(100.dp)
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+    ){
+        SmallFloatingActionButton(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            onClick = {
+                navController.navigate(Screen.Home.route)
+            },
+            contentColor = MaterialTheme.colorScheme.secondary
+        ) {
+            Icon(Icons.Filled.ExitToApp, "Small floating action button.")
+        }
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
             .absoluteOffset(0.dp, 48.dp)
-            .fillMaxWidth()
             .padding(8.dp)
     ){
         TitleBox()
@@ -222,4 +242,12 @@ private fun TitleBox(modifier: Modifier = Modifier){
 @Composable
 private fun Error(){
     Text(text = stringResource(id = R.string.error))
+}
+
+@Composable
+@Preview(showBackground = true)
+fun TodoViewPreview(){
+    TodoView(TodoViewModel(),
+    navController = rememberNavController()
+    )
 }
