@@ -25,14 +25,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun HomeView(viewModel: HomeViewModel, navController: NavController){
-    var login by remember { mutableStateOf(false) }
-    var register by remember { mutableStateOf(false) }
+    // var login by remember { mutableStateOf(false) }
+    // var register by remember { mutableStateOf(false) }
     var inputEmail by remember{ mutableStateOf("") }
     var inputPassword by remember { mutableStateOf("") }
 

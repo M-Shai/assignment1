@@ -1,7 +1,6 @@
 package edu.metrostate.myassignment1
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Column
@@ -11,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,8 +19,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -53,7 +53,7 @@ import androidx.navigation.compose.rememberNavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoView (viewModel: TodoViewModel, navController: NavController){
-    //val todoList = getInitialList()
+    // val todoList = getInitialList()
     val todoList by viewModel.todoList.observeAsState()
     var inputText by remember{ mutableStateOf("") }
     var showError by remember{ mutableStateOf(false) }
@@ -92,7 +92,7 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
             },
             contentColor = MaterialTheme.colorScheme.secondary
         ) {
-            Icon(Icons.Filled.ExitToApp, "Small floating action button.")
+            Icon(Icons.AutoMirrored.Filled.ExitToApp, "Small floating action button.")
         }
     }
     Column(
@@ -172,21 +172,23 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
                     }) {
                         Text(text = "Cancel")
                     }
-                }
-                if(showError){
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(108.dp, 28.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .size(88.dp)
-                            .background(Color.Red)
-                            .padding(34.dp, 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Text(text = stringResource(id = R.string.error))
+                    if(showError){
+                        Row(
+                            modifier = Modifier
+                                .offset(0.dp,(-25).dp)
+                                .fillMaxWidth()
+                                .padding(108.dp, 28.dp)
+                                .clip(RoundedCornerShape(26.dp))
+                                .size(88.dp)
+                                .background(Color.Red)
+                                .padding(34.dp, 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(text = stringResource(id = R.string.error))
+                        }
                     }
                 }
+
             }
         }
     }
@@ -207,7 +209,7 @@ fun TodoItem(item: Todo){
         Text(
           text = item.item,
           fontSize = 12.sp,
-          color = androidx.compose.ui.graphics.Color.Black)
+          color = Color.Black)
         Spacer(modifier = Modifier.size(48.dp))
         Spacer(modifier = Modifier.size(48.dp))
         Spacer(modifier = Modifier.size(48.dp))
@@ -232,7 +234,7 @@ private fun TitleBox(modifier: Modifier = Modifier){
     ){
         Text(
             text = stringResource(id = R.string.title),
-            color = androidx.compose.ui.graphics.Color.Black,
+            color = Color.Black,
             textAlign = TextAlign.Center,
             modifier = modifier
         )
