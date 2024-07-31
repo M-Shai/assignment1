@@ -5,4 +5,13 @@
     <string name="msg2">New Todo</string>
     <string name="empty">No items todo yet!</string>
     <string name="error">Error, must enter text!</string>
+    <string name="email">Email Address</string>
+    <string name="password">Password</string>
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="phone">Phone Number</string>
+    <string name="addr">Address</string>
+    <string name="city">City</string>
+    <string name="st">State</string>
+    <string name="zip">Zip Code</string>
 </resources>
