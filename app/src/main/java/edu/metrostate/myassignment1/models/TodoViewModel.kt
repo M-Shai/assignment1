@@ -1,8 +1,10 @@
-package edu.metrostate.myassignment1
+package edu.metrostate.myassignment1.models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import edu.metrostate.myassignment1.api.TodoManager
+import edu.metrostate.myassignment1.data.Todo
 
 class TodoViewModel : ViewModel(){
 
@@ -10,7 +12,7 @@ class TodoViewModel : ViewModel(){
     val todoList : LiveData<List<Todo>> = _todoList
 
     private fun getAllTodo(){
-        _todoList.value = TodoManager.getAllTodo()
+        //_todoList.value = TodoManager.getAllTodo()
     }
 
     fun addTodo(item: String){

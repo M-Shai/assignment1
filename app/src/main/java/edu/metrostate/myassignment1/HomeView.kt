@@ -1,5 +1,6 @@
 package edu.metrostate.myassignment1
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,13 +28,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import edu.metrostate.myassignment1.api.Request.login
+// import edu.metrostate.myassignment1.api.Request.getTodos
+import edu.metrostate.myassignment1.misc.LoginCred
+import edu.metrostate.myassignment1.models.HomeViewModel
 
 @Composable
 fun HomeView(viewModel: HomeViewModel, navController: NavController){
     // var login by remember { mutableStateOf(false) }
     // var register by remember { mutableStateOf(false) }
-    var inputEmail by remember{ mutableStateOf("") }
-    var inputPassword by remember { mutableStateOf("") }
+    var inputEmail by remember{ mutableStateOf("Ant@mail.com") }
+    var inputPassword by remember { mutableStateOf("password") }
 
     Column(
         modifier = Modifier
@@ -56,7 +61,7 @@ fun HomeView(viewModel: HomeViewModel, navController: NavController){
                 .background(Color.Transparent)
                 .padding(50.dp, 4.dp)
                 .fillMaxWidth(),
-            value = inputEmail,
+            value = inputPassword,
             onValueChange = { inputPassword = it },
             label = {Text(text = stringResource(id = R.string.password))}
         )
@@ -65,21 +70,24 @@ fun HomeView(viewModel: HomeViewModel, navController: NavController){
             modifier = Modifier
                 .absoluteOffset(0.dp, (-344).dp),
             color = Color.Blue,
-            text = "Todo App",
+            text = stringResource(id = R.string.title),
             fontSize = 48.sp,
             fontWeight = FontWeight.Bold,
         )
 
         Button(
             modifier = Modifier
-                .offset(0.dp,0.dp)
+                .offset(0.dp, 0.dp)
                 .padding(2.dp)
                 .fillMaxWidth(),
             onClick = {
-                navController.navigate(Screen.Todo.route)
+                viewModel.userLogin(
+                    email = inputEmail,
+                    password = inputPassword
+                )
         }) {
             Text(
-                text = "Login",
+                text = stringResource(id = R.string.lg),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -92,7 +100,7 @@ fun HomeView(viewModel: HomeViewModel, navController: NavController){
             navController.navigate(Screen.Register.route)
         }) {
             Text(
-                text = "Create Account",
+                text = stringResource(id = R.string.crt),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -103,7 +111,8 @@ fun HomeView(viewModel: HomeViewModel, navController: NavController){
 @Composable
 @Preview(showBackground = true)
 fun HomeViewPreview(){
-    HomeView(HomeViewModel(),
+    HomeView(
+        HomeViewModel(),
     navController = rememberNavController()
     )
 }

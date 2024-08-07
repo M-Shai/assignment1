@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">myAssignment1</string>
-    <string name="title">Todo</string>
+    <string name="title">Todo App</string>
     <string name="msg1">%1$s List item</string>
     <string name="msg2">New Todo</string>
     <string name="empty">No items todo yet!</string>
-    <string name="error">Error, must enter text!</string>
+    <string name="error">ERROR, MUST ENTER TEXT!</string>
     <string name="email">Email Address</string>
     <string name="password">Password</string>
+    <string name="nme">Name</string>
     <string name="fname">First Name</string>
     <string name="lname">Last Name</string>
     <string name="phone">Phone Number</string>
@@ -14,4 +15,12 @@
     <string name="city">City</string>
     <string name="st">State</string>
     <string name="zip">Zip Code</string>
+    <string name="sv">SAVE</string>
+    <string name="cncl">CANCEL</string>
+    <string name="lg">Login</string>
+    <string name="crt">Create Account</string>
+    <string name="regis">Register</string>
+    <string name="msg3">Logged in</string>
+    <string name="msg4">Logged out</string>
+    <string name="msg5">Enter New User Information</string>
 </resources>

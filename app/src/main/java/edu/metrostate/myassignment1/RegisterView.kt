@@ -1,6 +1,7 @@
 package edu.metrostate.myassignment1
 
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import edu.metrostate.myassignment1.api.Request
+import edu.metrostate.myassignment1.models.RegisterViewModel
 
 @Composable
 fun RegisterView(viewModel: RegisterViewModel, navController : NavController){
@@ -47,9 +50,9 @@ fun RegisterView(viewModel: RegisterViewModel, navController : NavController){
     ) {
         Text(
             modifier = Modifier
-                .absoluteOffset(0.dp, (-135).dp),
+                .absoluteOffset(0.dp, (-171).dp),
             color = Color.Blue,
-            text = "Todo App",
+            text = stringResource(id = R.string.title),
             fontSize = 48.sp,
             fontWeight = FontWeight.Bold,
         )
@@ -57,7 +60,7 @@ fun RegisterView(viewModel: RegisterViewModel, navController : NavController){
             modifier = Modifier
                 .absoluteOffset(0.dp, (-0).dp),
             color = Color.Blue,
-            text = "Enter New User Information",
+            text = stringResource(id = R.string.msg5),
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
         )
@@ -69,8 +72,9 @@ fun RegisterView(viewModel: RegisterViewModel, navController : NavController){
                 .fillMaxWidth(),
             value = inputFirstName,
             onValueChange = { inputFirstName = it },
-            label = {Text(text = stringResource(id = R.string.fname))}
+            label = {Text(text = stringResource(id = R.string.nme))}
         )
+        /*
         OutlinedTextField(
             modifier = Modifier
                 .background(Color.Transparent)
@@ -80,6 +84,7 @@ fun RegisterView(viewModel: RegisterViewModel, navController : NavController){
             onValueChange = { inputLastName = it },
             label = {Text(text = stringResource(id = R.string.lname))}
         )
+         */
         OutlinedTextField(
             modifier = Modifier
                 .background(Color.Transparent)
@@ -101,10 +106,18 @@ fun RegisterView(viewModel: RegisterViewModel, navController : NavController){
 
         Spacer(modifier = Modifier.padding(6.dp))
         Button(onClick = {
+           /* val data = Request.registerUser(
+                name = inputFirstName,
+                email = inputEmail,
+                password = inputPassword
+            )*/
+            //inputPassword = data.toString()
+
+            //Log.d("Main Activity", data.toString())
             navController.navigate(Screen.Home.route)
         }) {
             Text(
-                text = "Register",
+                text = stringResource(id = R.string.regis),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -116,7 +129,8 @@ fun RegisterView(viewModel: RegisterViewModel, navController : NavController){
 @Composable
 @Preview(showBackground = true)
 fun RegisterViewPreview(){
-    RegisterView(RegisterViewModel(),
+    RegisterView(
+        RegisterViewModel(),
     navController = rememberNavController()
     )
 }

@@ -49,6 +49,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import edu.metrostate.myassignment1.data.Todo
+import edu.metrostate.myassignment1.misc.ToDo
+import edu.metrostate.myassignment1.models.TodoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,13 +107,17 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
         TitleBox()
 
         todoList?.let{
+            /*
             LazyColumn (
+
                 content = {
                     itemsIndexed(it) { index: Int, item: Todo ->
                         TodoItem(item = item)
                     }
                 }
             )
+
+             */
         }?: Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -119,6 +126,7 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
             text = stringResource(id = R.string.empty),
             fontSize = 28.sp
         )
+
         if (showBottomSheet) {
             ModalBottomSheet(
                 modifier = Modifier.fillMaxHeight(),
@@ -158,7 +166,7 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
                         }
                         inputText = ""
                     }) {
-                        Text(text = "Save")
+                        Text(text = stringResource(id = R.string.sv))
                     }
 
                     OutlinedButton(
@@ -170,21 +178,27 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
                         showError = false
                         showBottomSheet = false
                     }) {
-                        Text(text = "Cancel")
+                        Text(text = stringResource(id = R.string.cncl))
                     }
                     if(showError){
                         Row(
                             modifier = Modifier
-                                .offset(0.dp,(-25).dp)
+                                .offset(0.dp, (-25).dp)
                                 .fillMaxWidth()
-                                .padding(108.dp, 28.dp)
+                                //.fillMaxSize()
+                                //.align(alignment = Alignment.CenterHorizontally)
+                                .padding(60.dp, 28.dp)
                                 .clip(RoundedCornerShape(26.dp))
-                                .size(88.dp)
-                                .background(Color.Red)
-                                .padding(34.dp, 16.dp),
+                                .size(600.dp, 50.dp)
+                                .background(Color.Cyan)
+                                .padding(60.dp, 16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ){
-                            Text(text = stringResource(id = R.string.error))
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                text = stringResource(id = R.string.error)
+                                    )
                         }
                     }
                 }
@@ -194,8 +208,9 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
     }
 }
 
+
 @Composable
-fun TodoItem(item: Todo){
+fun TodoItem(item: ToDo){
     var checked by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
@@ -249,7 +264,8 @@ private fun Error(){
 @Composable
 @Preview(showBackground = true)
 fun TodoViewPreview(){
-    TodoView(TodoViewModel(),
+    TodoView(
+        TodoViewModel(),
     navController = rememberNavController()
     )
 }
