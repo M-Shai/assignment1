@@ -32,6 +32,7 @@ import edu.metrostate.myassignment1.api.Request.login
 // import edu.metrostate.myassignment1.api.Request.getTodos
 import edu.metrostate.myassignment1.misc.LoginCred
 import edu.metrostate.myassignment1.models.HomeViewModel
+import edu.metrostate.myassignment1.models.SharedViewModel
 
 @Composable
 fun HomeView(viewModel: HomeViewModel, navController: NavController){
@@ -68,7 +69,7 @@ fun HomeView(viewModel: HomeViewModel, navController: NavController){
 
         Text(
             modifier = Modifier
-                .absoluteOffset(0.dp, (-344).dp),
+                .absoluteOffset(0.dp, (-372).dp),
             color = Color.Blue,
             text = stringResource(id = R.string.title),
             fontSize = 48.sp,
@@ -83,8 +84,10 @@ fun HomeView(viewModel: HomeViewModel, navController: NavController){
             onClick = {
                 viewModel.userLogin(
                     email = inputEmail,
-                    password = inputPassword
+                    password = inputPassword,
+                    navController
                 )
+
         }) {
             Text(
                 text = stringResource(id = R.string.lg),

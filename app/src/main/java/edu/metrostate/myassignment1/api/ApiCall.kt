@@ -3,6 +3,7 @@ package edu.metrostate.myassignment1.api
 
 import edu.metrostate.myassignment1.data.AddTodoResponse
 import edu.metrostate.myassignment1.data.Credentials
+import edu.metrostate.myassignment1.data.GetTodoResponse
 import edu.metrostate.myassignment1.data.LoginResponse
 import edu.metrostate.myassignment1.data.RegisterResponse
 import retrofit2.http.GET
@@ -12,6 +13,7 @@ import edu.metrostate.myassignment1.data.UpdateTodoResponse
 import edu.metrostate.myassignment1.data.User
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -25,7 +27,7 @@ interface ApiCall {
     )
 
     @POST("/api/users/register")
-   fun register(
+   suspend fun register(
         @Query("apikey") apiKey: String,
         @Body registerUser: Credentials
     ) : Response<RegisterResponse>
@@ -38,22 +40,25 @@ interface ApiCall {
 
     @GET("/api/users/{user_id}/todos")
     suspend fun getUserTodos(
-        @Query("apikey") apiKey: String,
-        @Path("user_id") userId: Int
-    ) : Response<List<Todo>>
+        @Header("authorization") auth: String,
+        @Path("user_id") userId: Int,
+        @Query("apikey") apiKey: String
+    ) : Response<List<GetTodoResponse>>
 
     @POST("/api/users/{user_id}/todos")
-    abstract fun addUserTodo(
-        @Query("apikey") apiKey: String,
+    suspend fun addUserTodo(
+        @Header("authorization") auth: String,
         @Path("user_id") userId: Int,
-        @Body newTodo:Todo
+        @Query("apikey") apiKey: String,
+        @Body newTodo: Todo
     ) : Response<AddTodoResponse>
 
     @PUT("/api/users/{user_id}/todos/{todo_id}")
-    abstract fun updateTodo(
-        @Query("apikey") apiKey: String,
+    suspend fun updateTodo(
+        @Header("authorization") auth: String,
         @Path("user_id") userId: Int,
         @Path("todo_id") todoId: Int,
+        @Query("apikey") apiKey: String,
         @Body updateTodo: UpdateTodo
     ) : Response<UpdateTodoResponse>
 }

@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,10 +28,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import edu.metrostate.myassignment1.api.Request
 import edu.metrostate.myassignment1.models.RegisterViewModel
+import edu.metrostate.myassignment1.models.SharedViewModel
 
 @Composable
 fun RegisterView(viewModel: RegisterViewModel, navController : NavController){
@@ -99,25 +103,41 @@ fun RegisterView(viewModel: RegisterViewModel, navController : NavController){
                 .background(Color.Transparent)
                 .padding(50.dp, 4.dp)
                 .fillMaxWidth(),
-            value = inputEmail,
+            value = inputPassword,
             onValueChange = { inputPassword = it },
             label = {Text(text = stringResource(id = R.string.password))}
         )
 
         Spacer(modifier = Modifier.padding(6.dp))
-        Button(onClick = {
-           /* val data = Request.registerUser(
-                name = inputFirstName,
-                email = inputEmail,
-                password = inputPassword
-            )*/
-            //inputPassword = data.toString()
-
-            //Log.d("Main Activity", data.toString())
-            navController.navigate(Screen.Home.route)
+        Button(
+            modifier = Modifier
+                .offset(0.dp, 0.dp)
+                .padding(2.dp)
+                .fillMaxWidth(),
+            onClick = {
+            println("RegisterView 118")
+            viewModel.registerNewUser(
+                navController,
+                inputFirstName,
+                inputEmail,
+                inputPassword)
         }) {
             Text(
                 text = stringResource(id = R.string.regis),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        OutlinedButton(
+            modifier = Modifier
+                .offset(0.dp, 0.dp)
+                .padding(2.dp),
+            onClick = {
+                viewModel.returnLogin(navController)
+
+            }) {
+            Text(
+                text = stringResource(id = R.string.lg),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )

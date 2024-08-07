@@ -47,10 +47,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import edu.metrostate.myassignment1.data.AddTodoResponse
 import edu.metrostate.myassignment1.data.Todo
 import edu.metrostate.myassignment1.misc.ToDo
+import edu.metrostate.myassignment1.models.SharedViewModel
+import edu.metrostate.myassignment1.models.SharedViewModel.loggedInUser
 import edu.metrostate.myassignment1.models.TodoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -91,7 +95,7 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
         SmallFloatingActionButton(
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
             onClick = {
-                navController.navigate(Screen.Home.route)
+                viewModel.returnToHome(navController)
             },
             contentColor = MaterialTheme.colorScheme.secondary
         ) {
@@ -107,23 +111,24 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
         TitleBox()
 
         todoList?.let{
-            /*
+
             LazyColumn (
 
                 content = {
-                    itemsIndexed(it) { index: Int, item: Todo ->
-                        TodoItem(item = item)
+                    itemsIndexed(it) { index: Int, item: AddTodoResponse ->
+                        TodoItem(item = item, viewModel)
                     }
                 }
             )
 
-             */
+
         }?: Text(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             textAlign = TextAlign.Center,
             text = stringResource(id = R.string.empty),
+            //text = loggedInUser.toString(),
             fontSize = 28.sp
         )
 
@@ -210,7 +215,7 @@ fun TodoView (viewModel: TodoViewModel, navController: NavController){
 
 
 @Composable
-fun TodoItem(item: ToDo){
+fun TodoItem(item: AddTodoResponse, viewModel: TodoViewModel){
     var checked by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
@@ -222,7 +227,7 @@ fun TodoItem(item: ToDo){
         verticalAlignment = Alignment.CenterVertically
     ){
         Text(
-          text = item.item,
+          text = item.description,
           fontSize = 12.sp,
           color = Color.Black)
         Spacer(modifier = Modifier.size(48.dp))
@@ -231,7 +236,13 @@ fun TodoItem(item: ToDo){
         Spacer(modifier = Modifier.size(48.dp))
         Checkbox(
             checked = checked,
-            onCheckedChange = { checked = it }
+            onCheckedChange = {
+                viewModel.updateThisTodo(
+                    loggedInUser.id,
+                    item.id,
+                    item,
+                    loggedInUser.token)
+                checked = it }
         )
     }
 }
