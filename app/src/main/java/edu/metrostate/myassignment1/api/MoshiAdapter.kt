@@ -9,20 +9,21 @@ import edu.metrostate.myassignment1.data.LoginResponse
 
 @JsonClass(generateAdapter = true)
 class MoshiAdapter {
+    /*
     @FromJson
     fun fromJson(json: LoginResponse): LoginResponse{
         var tmpadmin: Boolean = false
         var tmpenabled: Boolean = false
 
         if(json.admin == true || json.admin == false){
-
+            tmpadmin = json.admin
         }
         else if (json.admin as Int == 1){
             tmpadmin = true
         }
 
         if(json.admin == true || json.admin == false){
-
+            tmpenabled = json.enabled
         }
         else if(json.enabled as Int == 1){
             tmpenabled = true
@@ -40,6 +41,8 @@ class MoshiAdapter {
 
         return tmp
     }
+
+     */
     /*
     fun toJson(json: LoginResponse){
         var tmp: LoginResponse = LoginResponse(
