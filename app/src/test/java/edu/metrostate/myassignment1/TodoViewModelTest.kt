@@ -2,13 +2,9 @@ package edu.metrostate.myassignment1
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
-import edu.metrostate.myassignment1.api.Request.updateUserTodo
 import edu.metrostate.myassignment1.api.TodoManager
 import edu.metrostate.myassignment1.api.TodoManager.setTodoList
 import edu.metrostate.myassignment1.data.AddTodoResponse
-import edu.metrostate.myassignment1.data.Meta
-import edu.metrostate.myassignment1.data.UpdateTodo
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
 
