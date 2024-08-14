@@ -23,7 +23,7 @@ class TodoViewModel() : ViewModel(){
     val todoList : LiveData<List<AddTodoResponse>> = _todoList
 
     fun setAllTodo(){
-        setTodoList()
+        //setTodoList()
         println("TVM 20")
         _todoList.value = TodoManager.getAllTodo()
         println("TVM 22")

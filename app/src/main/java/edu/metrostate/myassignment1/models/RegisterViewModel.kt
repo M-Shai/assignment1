@@ -16,7 +16,7 @@ class RegisterViewModel() : ViewModel() {
         navController: NavController,
         name: String,
         email: String,
-        password: String){
+        password: String) : Boolean {
         println("RegisterViewModel 20")
         var userCred = Credentials(name,email,password)
         println("RegisterViewModel 22: $userCred")
@@ -26,7 +26,9 @@ class RegisterViewModel() : ViewModel() {
             newUser = registerResponse
             println("RegisterViewModel 27")
             navController.navigate(Screen.Home.route)
+            return true
         }
+        return false
     }
 
     fun returnLogin(navController: NavController){

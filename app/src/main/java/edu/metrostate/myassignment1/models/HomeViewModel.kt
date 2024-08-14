@@ -1,7 +1,5 @@
 package edu.metrostate.myassignment1.models
 
-import androidx.compose.runtime.MutableState
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import edu.metrostate.myassignment1.Screen
@@ -9,12 +7,11 @@ import edu.metrostate.myassignment1.api.Request.login
 import edu.metrostate.myassignment1.api.TodoManager.setTodoList
 import edu.metrostate.myassignment1.data.LoginResponse
 import retrofit2.Response
-import edu.metrostate.myassignment1.models.SharedViewModel
 import edu.metrostate.myassignment1.models.SharedViewModel.loggedInUser
 
 class HomeViewModel() : ViewModel() {
     //private val request: Request1 = Request1()
-    fun userLogin(email: String, password: String, navController: NavController) {
+    fun userLogin(email: String, password: String, navController: NavController) : Boolean {
         val response: Response<LoginResponse> = login(
             email,
             password
@@ -31,6 +28,10 @@ class HomeViewModel() : ViewModel() {
             setTodoList()
             println("HVM Line 32")
             navController.navigate(Screen.Todo.route)
+            return true
+        }
+        else{
+            return false
         }
 
     }
